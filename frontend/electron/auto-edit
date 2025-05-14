@@ -1,0 +1,27 @@
+from flask import send_from_directory
+from moviepy.editor import VideoFileClip
+
+EXPORT_FOLDER = 'exports'
+os.makedirs(EXPORT_FOLDER, exist_ok=True)
+
+@app.route('/auto-edit', methods=['POST'])
+def auto_edit():
+    video = request.files.get('video')
+    if not video:
+        return jsonify({'error': 'No video uploaded'}), 400
+
+    filename = f"{uuid.uuid4().hex}.mp4"
+    path = os.path.join(UPLOAD_FOLDER, filename)
+    video.save(path)
+
+    try:
+        clip = VideoFileClip(path).subclip(0, min(10, VideoFileClip(path).duration))
+        output_path = os.path.join(EXPORT_FOLDER, filename)
+        clip.write_videofile(output_path, codec='libx264', audio_codec='aac')
+        return jsonify({'video_url': f'http://localhost:5000/exports/{filename}'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/exports/<path:filename>')
+def serve_file(filename):
+    return send_from_directory(EXPORT_FOLDER, filename)

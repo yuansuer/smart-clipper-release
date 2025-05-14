@@ -1,0 +1,3 @@
+mkdir build-icons
+sips -z 1024 1024 your-icon.png --out build-icons/icon_1024x1024.png
+iconutil -c icns build-icons -o icon.icns

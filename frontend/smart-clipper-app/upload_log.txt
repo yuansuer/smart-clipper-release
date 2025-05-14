@@ -1,0 +1,2 @@
+❌ 未找到打包产物 ./frontend/dist/SmartClipper.dmg
+❌ 未找到打包产物 ./frontend/dist/SmartClipper.dmg

@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",                    // 现代 JS 语法支持
+    "module": "CommonJS",                  // Electron 主进程用 CommonJS 更稳定
+    "lib": ["ES2020", "DOM"],              // 支持浏览器 API 和现代 JS
+    "outDir": "dist",                      // 编译输出目录
+    "rootDir": ".",                        // 项目根目录
+    "strict": true,                        // 严格类型检查
+    "esModuleInterop": true,               // 兼容 ES module 和 CommonJS
+    "moduleResolution": "node",            // 模块解析方式
+    "resolveJsonModule": true,             // 支持导入 JSON
+    "isolatedModules": true,               // 每个文件作为模块
+    "jsx": "react-jsx",                    // 支持 React JSX
+    "baseUrl": ".",                        // 相对路径起点
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@utils/*": ["src/utils/*"]
+    },
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"                        // 👈 保证 global.d.ts 被识别
+    ],
+    "skipLibCheck": true                   // 忽略第三方库类型检查
+  },
+  "include": [
+    "src",
+    "electron",
+    "main.ts",
+    "src/types/global.d.ts"                // 👈 明确包含类型声明
+  ],
+  "exclude": ["node_modules", "dist"]
+}
